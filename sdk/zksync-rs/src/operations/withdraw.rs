@@ -25,9 +25,9 @@ pub struct WithdrawBuilder<'a, S: EthereumSigner, P> {
 }
 
 impl<'a, S, P> WithdrawBuilder<'a, S, P>
-    where
-        S: EthereumSigner,
-        P: ZksNamespaceClient + EthNamespaceClient + Sync,
+where
+    S: EthereumSigner,
+    P: ZksNamespaceClient + EthNamespaceClient + Sync,
 {
     /// Initializes a withdraw transaction building process.
     pub fn new(wallet: &'a Wallet<S, P>) -> Self {
