@@ -11,6 +11,9 @@ use zksync_core::{
 use zksync_storage::RocksDB;
 use zksync_utils::wait_for_tasks::wait_for_tasks;
 
+use std::fs::File;
+use std::io::{self, BufRead, Read};
+
 #[derive(Debug, Parser)]
 #[structopt(author = "Matter Labs", version, about = "zkSync operator node", long_about = None)]
 struct Cli {
@@ -44,8 +47,54 @@ impl FromStr for ComponentsToRun {
     }
 }
 
+fn split_key_value(line: &str) -> Option<(&str, &str)> {
+    if let Some(pos) = line.find('=') {
+        let (key, value) = line.split_at(pos);
+        Some((key.trim(), value.trim_start_matches('=').trim()))
+    } else {
+        None
+    }
+}
+
+fn set_env_detail(path: &str) {
+    println!("read env:{}", path);
+
+    if let Ok(f) = File::open(path) {
+        let reader = io::BufReader::new(f);
+        for line in reader.lines() {
+            if let Ok(line_content) = line {
+                println!("line content:{}", line_content);
+                // 使用 split_once 方法分隔 key 和 value
+                if let Some((key, value)) = split_key_value(&line_content) {
+                    println!("Key: {}, Value: {}", key, value);
+                    env::set_var(key, value);
+                } else {
+                    eprintln!("Invalid line format: {}", line_content);
+                }
+            } else {
+                eprintln!("Error reading line.");
+            }
+        }
+    } else {
+        eprintln!("Error opening the file.");
+    }
+}
+fn set_env() {
+    let env_path = "/Users/lc/projects/go/src/github.com/matter-labs/zksync-era/etc/env/";
+
+    let dev_env = env_path.to_owned() + "dev.env";
+    set_env_detail(&dev_env);
+
+    let init_env = env_path.to_owned() + ".init.env";
+    set_env_detail(&init_env);
+}
+
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    println!("Enter zk server main");
+
+    set_env();
+
     let opt = Cli::parse();
     vlog::init();
     let sentry_guard = vlog::init_sentry();
