@@ -1,3 +1,4 @@
+ulimit -n 8176
 set -a 
 cd etc/env
 source dev.env

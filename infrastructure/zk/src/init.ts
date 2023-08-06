@@ -48,7 +48,7 @@ export async function init(skipSubmodulesCheckout: boolean) {
 // A smaller version of `init` that "resets" the localhost environment, for which `init` was already called before.
 // It does less and runs much faster.
 export async function reinit() {
-    await announced('Setting up containers', up());
+    //await announced('Setting up containers', up());
     await announced('Compiling JS packages', run.yarn());
     await announced('Compile l2 contracts', compiler.compileAll());
     await announced('Drop postgres db', db.drop());

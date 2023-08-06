@@ -93,7 +93,7 @@ fn set_env() {
 async fn main() -> anyhow::Result<()> {
     println!("Enter zk server main");
 
-    set_env();
+    // set_env();
 
     let opt = Cli::parse();
     vlog::init();

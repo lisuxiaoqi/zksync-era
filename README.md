@@ -1,44 +1,49 @@
-# zkSync Era: A ZK Rollup For Scaling Ethereum
+## 说明
+本项目fork自[https://github.com/matter-labs/zksync-era](https://github.com/matter-labs/zksync-era)。详细的文档可参考zksync官方。
+本项目用于学习和研究zksync-era，目标如下：
+* 理解zksync-era的核心模块组成。
+* 能够手动编译和部署各核心模块。
+* 能够对核心模块做功能调整。
 
-[![Logo](eraLogo.png)](https://zksync.io/)
+## 相关文档
+* [代码结构](structure.md)
+* [使用自己的eth私链搭建zksync-era](eth-zksync.md)
 
-zkSync Era is a layer 2 rollup that uses zero-knowledge proofs to scale Ethereum without compromising on security or
-decentralization. Since it's EVM compatible (Solidity/Vyper), 99% of Ethereum projects can redeploy without refactoring
-or re-auditing a single line of code. zkSync Era also uses an LLVM-based compiler that will eventually let developers
-write smart contracts in C++, Rust and other popular languages.
+## 快速启动zk sync网络
+1. 初始化编译脚本
+```azure
+zk
+```
+2. 编译部署zk sync
+第一次时运行：
+```azure
+zk init
+```
+zk init会下载所有工具，编译代码和部署合约。其中工具下载后，不需要重复下载，因此后续的编译部署往往不再使用zk init。
 
-## Knowledge Index
+如果需要重新编译zk server，或者合约，但不需要重新下载所有工具，可运行:
+```azure
+zk reinit
+```
+如果未改动任何代码，仅重新初始化网络，可运行:
+```azure
+zk lightweight-init
+```
+3. 启动zk网络
+启动容器：
+```azure
+zk up
+```
+启动zk server
+```azure
+zk server
+```
+4. 停止docker容器
+结束运行时，需要停止docker容器
+```azure
+zk down
+```
 
-The following questions will be answered by the following resources:
-
-| Question                                                | Resource                                |
-| ------------------------------------------------------- | --------------------------------------- |
-| What do I need to develop the project locally?          | [development.md](docs/development.md)   |
-| How can I set up my dev environment?                    | [setup-dev.md](docs/setup-dev.md)       |
-| How can I run the project?                              | [launch.md](docs/launch.md)             |
-| What is the logical project structure and architecture? | [architecture.md](docs/architecture.md) |
-| Where can I find developer docs?                        | [docs](https://v2-docs.zksync.io/dev/)  |
-
-## License
-
-zkSync Era is distributed under the terms of either
-
-- Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or <http://www.apache.org/licenses/LICENSE-2.0>)
-- MIT license ([LICENSE-MIT](LICENSE-MIT) or <http://opensource.org/licenses/MIT>)
-
-at your option.
-
-## Official Links
-
-- [Website](https://zksync.io/)
-- [GitHub](https://github.com/matter-labs)
-- [Twitter](https://twitter.com/zksync)
-- [Twitter for Devs](https://twitter.com/zkSyncDevs)
-- [Discord](https://discord.gg/nMaPGrDDwk)
-
-## Disclaimer
-
-zkSync Era has been through lots of testing and audits. Although it is live, it is still in alpha state and will go
-through more audits and bug bounties programs. We would love to hear our community's thoughts and suggestions about it!
-It is important to state that forking it now can potentially lead to missing important security updates, critical
-features, and performance improvements.
+## 其他待调研：
+* .init.env文件
+* ZK Prover
