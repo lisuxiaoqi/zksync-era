@@ -108,6 +108,8 @@ L2 智能合约位于 contracts/zksync 目录下，具体的部署脚本位于 c
 因此执行 zk contract deploy 部署 L2 合约时，仅仅是把往 L1 发送交易，把 L2 的合约代码保存在 L1 的合约中，并不是往 L1 上部
 署具体的合约。
 
+编译后合约的日志保存于zksync-era/deployL1.log，zksync-era/deployL2.log以及deployed_contracts.log文件中
+
 ## ZK Server
 
 ZK Server 代码位于 core 目录下，是 rust 代码，从 Cargo.toml 中可以看到具体的 workspace。其中入口代码文件路径为
